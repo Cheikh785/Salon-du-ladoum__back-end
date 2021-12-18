@@ -20,7 +20,7 @@ public class Ovins {
     @Column(nullable = true)
     private int age;
 
-    private int score;
+    private double score;
 
     private int rang;
 
@@ -35,7 +35,7 @@ public class Ovins {
 
     public Ovins() { }
 
-    public Ovins(String nomOvin, int nbDents, String genre, int age, int score, int rang, Mesures mesures) {
+    public Ovins(String nomOvin, int nbDents, String genre, int age, double score, int rang, Mesures mesures) {
         this.nomOvin = nomOvin;
         this.nbDents = nbDents;
         this.genre = genre;
@@ -82,11 +82,11 @@ public class Ovins {
         this.age = age;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
