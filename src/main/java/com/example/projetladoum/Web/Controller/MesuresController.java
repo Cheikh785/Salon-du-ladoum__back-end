@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,6 +19,9 @@ public class MesuresController {
 
     @Autowired
     private MesuresService mesuresService;
+
+    @Autowired
+    private MesuresDao mesuresDao;
 
     @GetMapping(value = "/mesures")
     public List<Mesures> getAllMesures() {
@@ -58,4 +62,49 @@ public class MesuresController {
 
         return ResponseEntity.notFound().build();
     }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

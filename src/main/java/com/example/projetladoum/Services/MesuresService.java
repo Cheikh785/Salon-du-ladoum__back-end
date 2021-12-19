@@ -7,18 +7,23 @@ package com.example.projetladoum.Services;
 import com.example.projetladoum.Models.Mesures;
 import com.example.projetladoum.Models.Ovins;
 import com.example.projetladoum.dao.MesuresDao;
+import com.example.projetladoum.dao.OvinsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MesuresService {
 
     @Autowired
     private MesuresDao mesuresDao;
+
     @Autowired
     private OvinsService ovinsService;
+
+    @Autowired
+    private OvinsDao ovinsDao;
 
 
     public List<Mesures> getAllMesures() {
@@ -87,14 +92,12 @@ public class MesuresService {
     }
 
 
-
-
     public Ovins getOvinOfMesures(int idMesure) {
         return this.mesuresDao.getOvinOfMesures(idMesure);
     }
 
     public int getGreaterHg(String genre) {
-        return  mesuresDao.getGreaterHg(genre);
+        return mesuresDao.getGreaterHg(genre);
     }
 
     public int getGreaterLoi(String genre) {
@@ -102,11 +105,9 @@ public class MesuresService {
     }
 
 
-
-
-
     /**
      * this function update the score of the ovine by calculate the mesures of the ovine
+     *
      * @param idMesure
      * @return void
      */
@@ -130,6 +131,7 @@ public class MesuresService {
         double currentMusculature = 0;
 
         double finalScore = 0;
+        int finalRang = 0;
 
         if (ovins.getScore() == 0) {
             /**
@@ -138,94 +140,152 @@ public class MesuresService {
             int mesureHg = ovins.getMesures().getHg();
             int mesureLoi = ovins.getMesures().getLoi();
 
-            currentScoreHg = ((44.0/maxHg)*mesureHg);
-            currentScoreLoi = (41.0/maxLoi)*mesureLoi;
-
-            System.out.println(maxHg);
-            System.out.println(maxLoi);
-            System.out.println(mesureHg);
-            System.out.println(mesureLoi);
-
-            System.out.println(currentScoreHg);
-            System.out.println(currentScoreLoi);
+            currentScoreHg = ((44.0 / maxHg) * mesureHg);
+            currentScoreLoi = (41.0 / maxLoi) * mesureLoi;
 
             //Note obtain by the ovine on his Ld (on 1points)
             switch (ovins.getMesures().getLigneDeDos()) {
-                case "ld-ensellee": currentScoreLd=0.25;
-                case "ld-peu-ensellee" : currentScoreLd=0.5;
-                case "ld-droite-forte": currentScoreLd=1;
+                case "ld-ensellee":
+                    currentScoreLd = 0.25;
+                    break;
+                case "ld-peu-ensellee":
+                    currentScoreLd = 0.5;
+                    break;
+                case "ld-droite-forte":
+                    currentScoreLd = 1;
+                    break;
             }
 
             //Note obtain by the ovine on his hair (on 1points)
             switch (ovins.getMesures().getPoils()) {
-                case "poils-terne": currentScorePoils=0.25;
-                case "poils-propre": currentScorePoils=0.5;
-                case "poils-propre-brillant": currentScorePoils=1;
+                case "poils-terne":
+                    currentScorePoils = 0.25;
+                    break;
+                case "poils-propre":
+                    currentScorePoils = 0.5;
+                    break;
+                case "poils-propre-brillant":
+                    currentScorePoils = 1;
+                    break;
             }
 
             //Note obtain by the ovine on his incurvation (on 1points)
             switch (ovins.getMesures().getIncurvationTete()) {
-                case "incurvation-grignard": currentScoreIncurvation=0.25;
-                case "incurvation-moyenne": currentScoreIncurvation=0.5;
-                case "incurvation-brusquee": currentScoreIncurvation=0.75;
-                case "incurvation-convexe": currentScoreIncurvation=1;
+                case "incurvation-grignard":
+                    currentScoreIncurvation = 0.25;
+                    break;
+                case "incurvation-moyenne":
+                    currentScoreIncurvation = 0.5;
+                    break;
+                case "incurvation-brusquee":
+                    currentScoreIncurvation = 0.75;
+                    break;
+                case "incurvation-convexe":
+                    currentScoreIncurvation = 1;
+                    break;
             }
 
 
             //Note obtain by the ovine on his hornes (on 1points)
             switch (ovins.getMesures().getCornes()) {
-                case "cornes-mince": currentScoreCornes=0.25;
-                case "cornes-moyennes": currentScoreCornes=0.5;
-                case "cornes-grosses": currentScoreCornes=1;
+                case "cornes-mince":
+                    currentScoreCornes = 0.25;
+                    break;
+                case "cornes-moyennes":
+                    currentScoreCornes = 0.5;
+                    break;
+                case "cornes-grosses":
+                    currentScoreCornes = 1;
+                    break;
             }
 
 
             //Note obtain by the ovine on his paws(pattes) (on 1points)
             switch (ovins.getMesures().getPattesAvantArriere()) {
-                case "pattes-crampees": currentScorePattes=0.25;
-                case "pattes-trop-serrees": currentScorePattes=0.5;
-                case "pattes-droite-bien-positionnees": currentScorePattes=1;
+                case "pattes-crampees":
+                    currentScorePattes = 0.25;
+                    break;
+                case "pattes-trop-serrees":
+                    currentScorePattes = 0.5;
+                    break;
+                case "pattes-droite-bien-positionnees":
+                    currentScorePattes = 1;
+                    break;
             }
 
             //Note obtain by the ovine on his pastern (on 1points)
             switch (ovins.getMesures().getPaturons()) {
-                case "paturons-cassees": currentScorePaturons=0.25;
-                case "paturons-peu-laches": currentScorePaturons=0.5;
-                case "paturons-fort-et-droit": currentScorePaturons=1;
+                case "paturons-cassees":
+                    currentScorePaturons = 0.25;
+                    break;
+                case "paturons-peu-laches":
+                    currentScorePaturons = 0.5;
+                    break;
+                case "paturons-fort-et-droit":
+                    currentScorePaturons = 1;
+                    break;
             }
 
 
             //Note obtain by the ovine on his scrotum (on 1points)
             switch (ovins.getMesures().getScrotum()) {
-                case "scrotum-async": currentScoreScrotum=0.5;
-                case "scrotum-sync": currentScoreScrotum=1;
+                case "scrotum-async":
+                    currentScoreScrotum = 0.5;
+                    break;
+                case "scrotum-sync":
+                    currentScoreScrotum = 1;
+                    break;
             }
 
 
             //Note obtain by the ovine on his queue (on 1points)
             switch (ovins.getMesures().getQueue()) {
-                case "queue-courte": currentScoreQueue=0.25;
-                case "queue-moyenne": currentScoreQueue=0.5;
-                case "queue-bonne": currentScoreQueue=0.75;
-                case "queue-bien-longue": currentScoreQueue=1;
+                case "queue-courte":
+                    currentScoreQueue = 0.25;
+                    break;
+                case "queue-moyenne":
+                    currentScoreQueue = 0.5;
+                    break;
+                case "queue-bonne":
+                    currentScoreQueue = 0.75;
+                    break;
+                case "queue-bien-longue":
+                    currentScoreQueue = 1;
+                    break;
             }
 
 
             //Note obtain by the ovine on his skeleton (on 1points)
             switch (ovins.getMesures().getOssature()) {
-                case "ossature-faible": currentOssature=0.25;
-                case "ossature-moyenne": currentOssature=0.5;
-                case "ossature-forte": currentOssature=0.75;
-                case "ossature-tres-forte": currentOssature=1;
+                case "ossature-faible":
+                    currentOssature = 0.25;
+                    break;
+                case "ossature-moyenne":
+                    currentOssature = 0.5;
+                    break;
+                case "ossature-forte":
+                    currentOssature = 0.75;
+                    break;
+                case "ossature-tres-forte":
+                    currentOssature = 1;
+                    break;
             }
 
 
             //Note obtain by the ovine on his musculature (on 1points)
             switch (ovins.getMesures().getMusculature()) {
-                case "musculature-faible": currentMusculature=0.25;
-                case "musculature-moyenne": currentMusculature=0.5;
-                case "musculature-forte": currentMusculature=0.75;
-                case "musculature-tres-forte": currentMusculature=1;
+                case "musculature-faible":
+                    currentMusculature = 0.25;
+                    break;
+                case "musculature-moyenne":
+                    currentMusculature = 0.5;
+                    break;
+                case "musculature-forte":
+                    currentMusculature = 0.75;
+                    break;
+                case "musculature-tres-forte":
+                    currentMusculature = 1;
+                    break;
             }
 
             finalScore = currentScoreHg + currentScoreLoi + currentScoreLd + currentScorePoils + currentScoreIncurvation + currentScoreCornes + currentScorePattes + currentScorePaturons + currentScoreScrotum + currentScoreQueue + currentOssature + currentMusculature;
@@ -233,11 +293,52 @@ public class MesuresService {
             System.out.println(finalScore);
 
             ovins.setScore(finalScore);
+//            ovinsService.updateOvin(ovins, ovins.getId()); // Crée une boucle infinie, pareceque que dans **updateOvin**, on fait appel à **updateMesures** qui lui à son tour fait appel à cette fontion(**updateScore**)
+            ovinsDao.save(ovins);
 
-            ovinsService.updateOvin(ovins, ovins.getId());
+            List<Double> listScore = mesuresDao.getScoreByDesc(ovins.getGenre());
+            for (int i=0; i<listScore.size(); i++)
+                System.out.println(listScore.get(i));
+
+            finalRang = getRangOfOvine(listScore, finalScore);
+            System.out.println(finalRang);
+
+            ovins.setRang(finalRang);
+//            ovinsService.updateOvin(ovins, ovins.getId());
+            ovinsDao.save(ovins);
         }
 
         System.out.println(ovins);
+    }
+
+
+    public int getRangOfOvine(List<Double> listScore, double score) {
+        List<Integer> listRang = new ArrayList<>();
+        int rang = 0;
+
+        if (!listScore.isEmpty()) {
+            int i=0; int k=1;
+            while (i<listScore.size()-1) {
+                if (listScore.get(i) != listScore.get(i+1)) {
+                    listRang.add(k);
+                    k++;
+                }else {
+                    if (listScore.get(i) == listScore.get(i+1))
+                        listRang.add(k);
+                }
+                i++;
+            }
+            listRang.add(k);
+
+            int j=0;
+            while (j<listScore.size()-1 && listScore.get(j) != score)
+                j++;
+            rang = listRang.get(j);
+        } else {
+            rang = 1;
+        }
+
+        return rang;
     }
 
 }
