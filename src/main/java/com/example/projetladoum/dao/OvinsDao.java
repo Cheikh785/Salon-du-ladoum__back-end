@@ -13,4 +13,43 @@ public interface OvinsDao extends JpaRepository<Ovins, Integer> {
     public Ovins findOvinsById(int id);
     @Query(value = "select candidate from Ovins ovin, Candidate candidate where ovin.id = candidate.ovin.id and ovin.genre = :genre order by ovin.rang asc")
     public List<Candidate> getRangByGenre(@Param("genre") String genre);
+
+    @Query(value = "select ovin.id from Ovins ovin where ovin.genre=:genre")
+    public List<Integer> getAllIdOfOvins(@Param("genre") String genre);
+
+    @Query(value = "update Ovins ovin set ovin.score=:score where ovin.id=:id")
+    public void adjustScoreByHg(@Param("id") Integer id, @Param("score") Double score);
+
+    @Query(value = "update Ovins ovin set ovin.rang=:rang where ovin.id=:id")
+    public void adjustRang(@Param("id") Integer id, @Param("rang") Integer rang);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

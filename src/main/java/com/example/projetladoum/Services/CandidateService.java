@@ -31,8 +31,20 @@ public class CandidateService {
     //Regiister a candidate
     public Candidate registerCandidate(Candidate candidate) {
         Mesures mesures = new Mesures();
+        mesures.setHg(0.0);
+        mesures.setLoi(0.0);
+        mesures.setLigneDeDos("");
+        mesures.setPoils("");
+        mesures.setIncurvationTete("");
+        mesures.setCornes("");
+        mesures.setPattesAvantArriere("");
+        mesures.setPaturons("");
+        mesures.setScrotum("");
+        mesures.setQueue("");
+        mesures.setOssature("");
+        mesures.setMusculature("");
+
         candidate.getOvin().setMesures(mesures);
-        System.out.println(candidate.getOvin().getMesures().getId() + candidate.getOvin().getMesures().getMusculature());
         return candidateDao.save(candidate);
     }
 

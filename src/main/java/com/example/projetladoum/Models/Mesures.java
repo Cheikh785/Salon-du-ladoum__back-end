@@ -1,9 +1,6 @@
 package com.example.projetladoum.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Mesures {
@@ -11,22 +8,43 @@ public class Mesures {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int hg;
-    private int loi;
+    @Column(nullable = true)
+    private Double hg;
+
+    @Column(nullable = true)
+    private Double loi;
+
+    @Column(nullable = true)
     private String ligneDeDos;
+
+    @Column(nullable = true)
     private String poils;
+
+    @Column(nullable = true)
     private String incurvationTete;
     private String cornes;
+
+    @Column(nullable = true)
     private String pattesAvantArriere;
+
+    @Column(nullable = true)
     private String paturons;
+
+    @Column(nullable = true)
     private String scrotum;
+
+    @Column(nullable = true)
     private String queue;
+
+    @Column(nullable = true)
     private String ossature;
+
+    @Column(nullable = true)
     private String musculature;
 
     public Mesures() { }
 
-    public Mesures(int id, int hg, int loi, String ligneDeDos, String poils, String incurvationTete, String cornes, String pattesAvantArriere, String paturons, String scrotum, String queue, String ossature, String musculature) {
+    public Mesures(int id, Double hg, int Double, String ligneDeDos, String poils, String incurvationTete, String cornes, String pattesAvantArriere, String paturons, String scrotum, String queue, String ossature, String musculature) {
         this.id = id;
         this.hg = hg;
         this.loi = loi;
@@ -46,19 +64,19 @@ public class Mesures {
         return id;
     }
 
-    public int getHg() {
+    public Double getHg() {
         return hg;
     }
 
-    public void setHg(int hg) {
+    public void setHg(Double hg) {
         this.hg = hg;
     }
 
-    public int getLoi() {
+    public Double getLoi() {
         return loi;
     }
 
-    public void setLoi(int loi) {
+    public void setLoi(Double loi) {
         this.loi = loi;
     }
 

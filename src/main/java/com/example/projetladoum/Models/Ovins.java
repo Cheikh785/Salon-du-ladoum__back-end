@@ -20,8 +20,10 @@ public class Ovins {
     @Column(nullable = true)
     private int age;
 
+    @Column(nullable = true)
     private double score;
 
+    @Column(nullable = true)
     private int rang;
 
     @OneToOne(cascade = CascadeType.ALL)

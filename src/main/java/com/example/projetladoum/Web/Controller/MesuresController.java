@@ -65,6 +65,39 @@ public class MesuresController {
 
 
 
+//    @GetMapping(value = "/mesures/greater/{score}")
+//    public ResponseEntity<Integer> getMaxHg(@PathVariable double score) {
+//        List<Double> listScore = mesuresDao.getScoreByDesc("MaleAdulte");
+//
+//        List<Integer> listRang = new ArrayList<>();
+//        int rang = 1;
+//
+//        if (!listScore.isEmpty()) {
+//            int i=0; int k=1;
+//            while (i<listScore.size()-1) {
+//                if (listScore.get(i) != listScore.get(i+1)) {
+//                    listRang.add(k);
+//                    k++;
+//                }else {
+//                    if (listScore.get(i) == listScore.get(i+1))
+//                        listRang.add(k);
+//                }
+//                i++;
+//            }
+//            listRang.add(k);
+//
+//            int j=0;
+//            while (j<listScore.size()-1 && listScore.get(j) != score)
+//                j=j+1;
+//            rang = listRang.get(j);
+//        }
+//        System.out.println(rang);
+//
+//        return ResponseEntity.ok().body(rang);
+//    }
+
+
+
 }
 
 
