@@ -30,6 +30,10 @@ public class Ovins {
     @JoinColumn(name = "mesures_id", referencedColumnName = "id")
     private Mesures mesures;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "concours_id", referencedColumnName = "id")
+    private Concours concours;
+
     //@JsonIgnore
     //@OneToOne(fetch = FetchType.LAZY, mappedBy = "ovin")
     //@JoinColumn(name = "proprietaire_id")
@@ -37,7 +41,7 @@ public class Ovins {
 
     public Ovins() { }
 
-    public Ovins(String nomOvin, int nbDents, String genre, int age, double score, int rang, Mesures mesures) {
+    public Ovins(String nomOvin, int nbDents, String genre, int age, double score, int rang, Mesures mesures, Concours concours) {
         this.nomOvin = nomOvin;
         this.nbDents = nbDents;
         this.genre = genre;
@@ -45,6 +49,7 @@ public class Ovins {
         this.score = score;
         this.rang = rang;
         this.mesures = mesures;
+        this.concours = concours;
     }
 
     public int getId() {
@@ -106,6 +111,14 @@ public class Ovins {
 
     public void setMesures(Mesures mesures) {
         this.mesures = mesures;
+    }
+
+    public Concours getConcours() {
+        return concours;
+    }
+
+    public void setConcours(Concours concours) {
+        this.concours = concours;
     }
 
     @Override

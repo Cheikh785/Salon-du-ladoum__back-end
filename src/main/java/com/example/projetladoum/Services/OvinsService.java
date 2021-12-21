@@ -1,6 +1,7 @@
 package com.example.projetladoum.Services;
 
 import com.example.projetladoum.Models.Candidate;
+import com.example.projetladoum.Models.Concours;
 import com.example.projetladoum.Models.Mesures;
 import com.example.projetladoum.Models.Ovins;
 import com.example.projetladoum.dao.OvinsDao;
@@ -16,6 +17,8 @@ public class OvinsService {
     private OvinsDao ovinsDao;
     @Autowired
     private MesuresService mesuresService;
+    @Autowired
+    private ConcoursService concoursService;
 
     public List<Ovins> getAllOvins() {
         return ovinsDao.findAll();
@@ -34,6 +37,8 @@ public class OvinsService {
 
 
     public Ovins registerOvin(Ovins ovinToRegister) {
+        Concours concours = concoursService.getConcoursById(2);
+        ovinToRegister.setConcours(concours);
         return ovinsDao.save(ovinToRegister);
     }
 
@@ -64,6 +69,11 @@ public class OvinsService {
             if (ovinToUpdate.getMesures() != null) {
                 Mesures mesureUpdated = mesuresService.updateMesures(ovinToUpdate.getMesures(), existingOvin.getMesures().getId());
                 existingOvin.setMesures(mesureUpdated);
+            }
+
+            if (ovinToUpdate.getConcours() != null) {
+                Concours concoursUpdated = concoursService.updateConcours(ovinToUpdate.getConcours(), ovinToUpdate.getConcours().getId());
+                existingOvin.setConcours(concoursUpdated);
             }
 
             Ovins ovinUpadated = registerOvin(existingOvin);

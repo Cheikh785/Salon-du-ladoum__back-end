@@ -301,8 +301,6 @@ public class MesuresService {
 
 
 
-
-
     public List<Double> getScoreOfEsthetiqueMesures(Ovins ovins) {
         List<Double> listEsthetiqueScore = new ArrayList<>();
 

@@ -1,14 +1,12 @@
 package com.example.projetladoum.dao;
 
 import com.example.projetladoum.Models.Candidate;
-import com.example.projetladoum.Models.CandidateByType;
 import com.example.projetladoum.Models.Mesures;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Objects;
 
 public interface CandidateDao extends JpaRepository<Candidate, Integer> {
     public List<Candidate> findAll();
